@@ -1,38 +1,30 @@
-from collections import deque
-
-# Define the tree as a dictionary
-tree = {
-    'B': ['E', 'X', 'K'],
-    'E': ['P', 'G'],
-    'P': ['D', 'T'],
-    'D': [],
-    'T': [],
-    'G': [],
-    'X': [],
-    'K': ['A', 'R'],
-    'A': ['H', 'M'],
-    'H': [],
-    'M': [],
-    'R': []
+Tree={
+    1:[2,7,8],
+    2:[3,6],
+    3:[4,5],
+    4:[],
+    5:[],
+    6:[],
+    7:[],
+    8:[9,12],
+    9:[10,11],
+    12:[],
+    10:[],
+    11:[]
 }
+def dfs_recursive(node, visited=None):
+    if visited is None:
+        visited = set() 
+    visited.add(node)
+    print(node, end=' ')  
 
-def bfs(start_node):
-    visited = set()          
-    queue = deque([start_node]) 
-    result = []             
+    for neighbor in Tree.get(node, []):
+        if neighbor not in visited:
+            dfs_recursive(neighbor, visited)
+    
+    return visited
 
-    while queue:
-        node = queue.popleft()  
-        if node not in visited:
-            visited.add(node)   
-            result.append(node) 
-            for neighbor in tree.get(node, []):
-                if neighbor not in visited:
-                    queue.append(neighbor)
-
-    return result
-
-# Example usage:
-start_node = 'B'
-bfs_result = bfs(start_node)
-print("BFS Traversal Order:", bfs_result)
+start_node = 1
+print("DFS Traversal Order (Recursive):")
+dfs_recursive(start_node)
+print() 
